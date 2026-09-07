@@ -8,6 +8,16 @@ Referensi: `PRD-POS-FnB-Baktify.md` & `baktify-pos-design-system.json`.
 
 ---
 
+## Screenshots
+
+| Home / Dashboard | Orders | Tables |
+|---|---|---|
+| ![Home Dashboard](screenshots/01-home.png) | ![Orders](screenshots/02-orders.png) | ![Tables](screenshots/03-tables.png) |
+
+| Select Customer | New Order | Checkout | Receipt |
+|---|---|---|---|
+| ![Select Customer](screenshots/04-select-customer.png) | ![New Order](screenshots/05-new-order.png) | ![Checkout](screenshots/06-checkout.png) | ![Receipt](screenshots/07-receipt.png) |
+
 ## Struktur File
 
 ```
