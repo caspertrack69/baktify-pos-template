@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#F4F4F4" />
+  <title>Baktify POS — F&amp;B UI Template</title>
+
+  <!-- Font: Poppins (geometric rounded sans-serif) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS via Play CDN (tanpa build step — siap dipakai di Google Apps Script) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    /* Design tokens dari baktify-pos-design-system.json */
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            coral: { DEFAULT: "#F1653D", soft: "#FDEDE8" },
+            mint:  { DEFAULT: "#2ED8A0", tint: "#E4FBF3" },
+            amber: { DEFAULT: "#F5B324", tint: "#FDF3DD" },
+            canvas: "#F4F4F4",
+            surface: "#FFFFFF",
+            ink: "#1A1A1A",
+            ink2: "#8C8C8C",
+            ink3: "#B5B5B5",
+            line: "#EDEDED",
+          },
+          fontFamily: { sans: ["Poppins", "ui-rounded", "system-ui", "sans-serif"] },
+          boxShadow: {
+            card: "0px 4px 12px rgba(0,0,0,0.05)",
+            chip: "0px 2px 8px rgba(0,0,0,0.06)",
+            fab:  "0px 6px 16px rgba(241,101,61,0.35)",
+          },
+          borderRadius: { r8: "8px", r16: "16px", r20: "20px" },
+        },
+      },
+    };
+  </script>
+  <!-- Komponen reusable (style pakai @apply via Play CDN) -->
+  <style type="text/tailwindcss">
+    .app-header { @apply flex items-center justify-between px-5 pt-6; }
+    .icon-btn { @apply w-10 h-10 rounded-full bg-surface shadow-chip grid place-items-center text-ink2 cursor-pointer transition active:scale-95; }
+    .search-bar { @apply flex items-center gap-2.5 h-12 px-4 rounded-r16 bg-[#EBEBEB]; }
+    .search-bar input { @apply bg-transparent outline-none border-0 w-full text-[13px] text-ink placeholder:text-ink3; }
+    .filter-pill { @apply h-9 px-4 rounded-full text-[12px] font-semibold bg-surface text-ink shadow-chip cursor-pointer transition; }
+    .filter-pill.active { @apply bg-coral text-white; }
+    .badge { @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold; }
+    .badge-success { @apply bg-mint-tint text-mint; }
+    .badge-progress { @apply bg-coral-soft text-coral; }
+    .badge-warning { @apply bg-amber-tint text-amber; }
+    .nav-item { @apply flex flex-col items-center gap-1 w-[68px] pt-1.5 pb-0.5 text-ink3 cursor-pointer transition-colors; }
+    .nav-item.active { @apply text-coral; }
+    .trend-up { @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-mint-tint text-mint; }
+    .trend-down { @apply inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-tint text-amber; }
+  </style>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="font-sans text-ink antialiased">
+  <!-- App frame: mobile-first; di desktop tampil sebagai "centered app frame" (PRD 7.1.1) -->
+  <main class="relative mx-auto w-full max-w-[430px] min-h-screen bg-canvas pb-28 overflow-x-hidden">
+
+    <!-- ============ SCREEN 1: HOME / DASHBOARD ============ -->
+    <section id="screen-home" class="screen">
+      <header class="app-header"></header>
+
+      <!-- Sapaan personal (statis) -->
+      <div class="px-5 mt-6">
+        <h1 class="text-[24px] font-bold leading-tight">Good Morning, Diana</h1>
+        <p class="text-[13px] text-ink2 mt-1">Here's your outlet summary today</p>
+      </div>
+
+      <!-- Stat card utama (coral, filled) -->
+      <div class="px-5 mt-5">
+        <div class="rounded-r20 bg-gradient-to-br from-coral to-[#F5803D] p-5 text-white shadow-[0_10px_24px_rgba(241,101,61,0.30)]">
+          <div class="w-11 h-11 rounded-full bg-white/20 grid place-items-center">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <p class="mt-4 text-[13px] font-medium text-white/80">Total Earnings</p>
+          <p class="text-[30px] font-bold leading-none mt-1">$580</p>
+          <div class="mt-3.5 flex items-center gap-2">
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-white/20 text-white">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg>
+              +12.5%
+            </span>
+            <span class="text-[11px] text-white/70">vs yesterday</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 stat card sekunder (putih) -->
+      <div class="grid grid-cols-2 gap-4 px-5 mt-4">
+        <div class="bg-surface rounded-r20 shadow-card p-4">
+          <div class="w-10 h-10 rounded-full bg-coral-soft text-coral grid place-items-center">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+          </div>
+          <p class="mt-3 text-[12px] font-medium text-ink2">In Progress</p>
+          <p class="text-[24px] font-bold leading-none mt-1">12</p>
+          <span class="trend-up mt-2.5">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg>
+            +2.4%
+          </span>
+        </div>
+        <div class="bg-surface rounded-r20 shadow-card p-4">
+          <div class="w-10 h-10 rounded-full bg-amber-tint text-amber grid place-items-center">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 22h14"/><path d="M5 2h14"/><path d="M17 22v-4.17a2 2 0 0 0-.59-1.42L12 12l-4.41 4.41A2 2 0 0 0 7 17.83V22"/><path d="M7 2v4.17c0 .53.21 1.04.59 1.42L12 12l4.41-4.41A2 2 0 0 0 17 6.17V2"/></svg>
+          </div>
+          <p class="mt-3 text-[12px] font-medium text-ink2">Waiting List</p>
+          <p class="text-[24px] font-bold leading-none mt-1">8</p>
+          <span class="trend-down mt-2.5">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 17-8.5-8.5-5 5L2 7"/><path d="M16 17h6v-6"/></svg>
+            -1.2%
+          </span>
+        </div>
+      </div>
+
+      <!-- Popular Dishes (horizontal scroll) -->
+      <section class="mt-7">
+        <div class="flex items-center justify-between px-5">
+          <h2 class="text-[17px] font-bold">Popular Dishes</h2>
+          <button type="button" class="view-all text-[12px] font-semibold text-coral" data-target="popularList">View all</button>
+        </div>
+        <div id="popularList" class="flex gap-4 overflow-x-auto no-scrollbar mt-3.5 pl-5 pr-5 pb-1"></div>
+      </section>
+
+      <!-- Out of Stock (horizontal scroll) -->
+      <section class="mt-6">
+        <div class="flex items-center justify-between px-5">
+          <h2 class="text-[17px] font-bold">Out of Stock</h2>
+          <button type="button" class="view-all text-[12px] font-semibold text-coral" data-target="outOfStockList">View all</button>
+        </div>
+        <div id="outOfStockList" class="flex gap-4 overflow-x-auto no-scrollbar mt-3.5 pl-5 pr-5 pb-1"></div>
+      </section>
+    </section>
+
+    <!-- ============ SCREEN 2: ORDERS LIST ============ -->
+    <section id="screen-orders" class="screen hidden">
+      <header class="app-header"></header>
+
+      <div class="px-5 mt-6">
+        <h1 class="text-[22px] font-bold leading-tight">Orders</h1>
+        <p class="text-[13px] text-ink2 mt-1">Kelola &amp; pantau order outlet kamu</p>
+      </div>
+
+      <!-- Filter pill (segmented) -->
+      <div id="orderFilters" class="flex gap-2.5 px-5 mt-4">
+        <button type="button" class="filter-pill active" data-filter="inProgress">In Progress</button>
+        <button type="button" class="filter-pill" data-filter="waitingPayment">Waiting for Payment</button>
+      </div>
+
+      <!-- Search bar -->
+      <div class="px-5 mt-3.5">
+        <div class="search-bar">
+          <svg class="text-ink3 shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input id="orderSearch" type="text" placeholder="Search a Order" aria-label="Search a Order" />
+        </div>
+      </div>
+
+      <!-- List order -->
+      <div id="orderList" class="px-5 mt-4 flex flex-col gap-3"></div>
+    </section>
+
+    <!-- ============ SCREEN 3: SELECT CUSTOMER ============ -->
+    <section id="screen-customer" class="screen hidden">
+      <header class="flex items-center justify-between px-5 pt-6">
+        <button type="button" id="backBtn" class="icon-btn" aria-label="Kembali">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+        </button>
+        <h1 class="text-[17px] font-bold">Select Customer</h1>
+        <button type="button" class="w-10 h-10 rounded-full bg-coral text-white shadow-fab grid place-items-center cursor-pointer transition active:scale-95" aria-label="Tambah customer">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+      </header>
+
+      <!-- Search bar -->
+      <div class="px-5 mt-6">
+        <div class="search-bar">
+          <svg class="text-ink3 shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input id="customerSearch" type="text" placeholder="Search Customer" aria-label="Search Customer" />
+        </div>
+      </div>
+
+      <!-- List customer -->
+      <div id="customerList" class="px-5 mt-4 flex flex-col gap-4"></div>
+    </section>
+
+    <!-- ============ SCREEN 4: TABLE MANAGEMENT ============ -->
+    <section id="screen-table" class="screen hidden">
+      <header class="app-header"></header>
+
+      <div class="px-5 mt-6">
+        <h1 class="text-[22px] font-bold leading-tight">Tables</h1>
+        <p class="text-[13px] text-ink2 mt-1">Status meja outlet hari ini</p>
+      </div>
+
+      <!-- Legend status -->
+      <div class="px-5 mt-4 flex flex-wrap gap-2">
+        <span class="badge badge-success">Kosong</span>
+        <span class="badge badge-progress">Terisi</span>
+        <span class="badge badge-warning">Reserved</span>
+      </div>
+
+      <!-- Grid meja -->
+      <div id="tableGrid" class="grid grid-cols-2 gap-3 px-5 mt-4"></div>
+    </section>
+
+    <!-- ============ SCREEN 5: MORE MENU ============ -->
+    <section id="screen-more" class="screen hidden">
+      <header class="app-header"></header>
+
+      <div class="px-5 mt-6">
+        <h1 class="text-[22px] font-bold leading-tight">More</h1>
+        <p class="text-[13px] text-ink2 mt-1">Menu tambahan aplikasi</p>
+      </div>
+
+      <div id="moreList" class="px-5 mt-5 flex flex-col gap-3"></div>
+
+      <!-- Branding (PRD section 9) -->
+      <footer class="mt-8 pb-2 text-center">
+        <p class="text-[11px] text-ink3">POS F&amp;B Template &bull; v1.0</p>
+        <p class="text-[12px] font-semibold text-ink2 mt-1">Powered by <span class="text-coral">Baktify Creative Team</span></p>
+      </footer>
+    </section>
+  </main>
+
+  <!-- ============ BOTTOM NAVIGATION: 5 item + FAB tengah ============ -->
+  <nav class="fixed bottom-0 inset-x-0 z-50">
+    <div class="mx-auto w-full max-w-[430px]">
+      <div class="bg-surface/95 backdrop-blur-md shadow-[0_-6px_24px_rgba(0,0,0,0.07)] rounded-t-[22px] px-2 pt-2 pb-3 flex items-end justify-around">
+
+        <button type="button" class="nav-item" data-nav="home" aria-label="Home">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+          <span class="text-[10px] font-medium">Home</span>
+        </button>
+
+        <button type="button" class="nav-item" data-nav="orders" aria-label="Orders">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>
+          <span class="text-[10px] font-medium">Orders</span>
+        </button>
+
+        <!-- FAB tengah: tambah order baru (membuka Select Customer) -->
+        <button type="button" id="fabBtn" aria-label="Tambah order baru" class="w-14 h-14 -mt-9 rounded-full bg-coral text-white shadow-fab grid place-items-center cursor-pointer transition active:scale-95 shrink-0">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+
+        <button type="button" class="nav-item" data-nav="table" aria-label="Table">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
+          <span class="text-[10px] font-medium">Table</span>
+        </button>
+
+        <button type="button" class="nav-item" data-nav="more" aria-label="More">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+          <span class="text-[10px] font-medium">More</span>
+        </button>
+
+      </div>
+    </div>
+  </nav>
+
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

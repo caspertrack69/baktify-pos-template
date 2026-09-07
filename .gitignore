@@ -1,0 +1,13 @@
+# Dokumen internal (PRD & design system) — tidak diikutkan ke repo
+PRD-POS-FnB-Baktify.md
+baktify-pos-design-system.json
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
