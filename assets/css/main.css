@@ -1,0 +1,83 @@
+/* ============================================================
+   Baktify POS — F&B UI Template
+   main.css — CSS global di luar Tailwind + gaya cetak struk
+   Powered by Baktify Creative Team
+   ============================================================ */
+
+/* Backdrop netral di luar "app frame" saat dibuka di desktop */
+html,
+body {
+  background: #e7e7e7;
+}
+
+/* Sembunyikan scrollbar pada carousel horizontal */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: none;    /* Firefox */
+}
+
+/* Transisi antar layar (fade + slide ringan, sesuai PRD 7.3) */
+@keyframes screen-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.screen:not(.hidden) {
+  animation: screen-in 0.22s ease-out both;
+}
+
+/* Hormati preferensi pengguna yang mematikan animasi */
+@media (prefers-reduced-motion: reduce) {
+  .screen:not(.hidden) {
+    animation: none;
+  }
+}
+
+/* Hilangkan highlight biru saat tap di mobile */
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- Cetak struk ----------
+   Saat window.print(), hanya elemen struk yang tampil. */
+@media print {
+  body > *:not(#receiptModal) {
+    display: none !important;
+  }
+
+  #receiptModal {
+    position: static !important;
+    display: block !important;
+  }
+
+  .receipt-backdrop,
+  .receipt-actions {
+    display: none !important;
+  }
+
+  .receipt-wrap {
+    position: static !important;
+    display: block !important;
+    padding: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  #receiptPrint {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    width: 80mm !important;
+    max-width: 80mm !important;
+    margin: 0 auto;
+    padding: 4mm !important;
+  }
+}
