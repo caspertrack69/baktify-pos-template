@@ -1,10 +1,9 @@
 # Baktify POS — F&B UI Template
 
-**Powered by Baktify Creative Team** • v1.0 • 100% static / dummy data
+**Powered by Baktify Creative Team** • v1.0 
 
-Template UI website POS (Point of Sale) untuk kategori Food & Beverage — mobile-first, tanpa framework, tanpa build step. Dilengkapi alur transaksi front-end lengkap (buat order, checkout, update status order) menggunakan data dummy. Cocok sebagai starter template, portofolio desain, dan **siap dijadikan template komunitas Google Apps Script**.
+Template UI website POS (Point of Sale) untuk kategori Food & Beverage — mobile-first, tanpa framework, tanpa build step. Dilengkapi alur transaksi front-end lengkap (buat order, checkout, update status order) menggunakan data dummy.
 
-Referensi: `PRD-POS-FnB-Baktify.md` & `baktify-pos-design-system.json`.
 
 ---
 
@@ -111,8 +110,5 @@ Navigasi antar tab berjalan **tanpa reload halaman** (SPA behavior).
    ```
 4. Deploy → New deployment → Web app. Catatan: CDN Tailwind, Google Fonts, dan placehold.net tetap dimuat via internet.
 
-## Catatan
 
-- Play CDN Tailwind tidak direkomendasikan untuk aplikasi produksi berskala besar, namun ideal untuk template komunitas tanpa build step.
-- Seluruh data bersifat dummy/statis sesuai scope PRD v1.0 — tidak ada backend, autentikasi, atau transaksi nyata.
 
